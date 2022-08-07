@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="se-SV" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+    <meta name="robots" content="noindex">
+	<title>DesignX</title>
+    <meta author="Daniel Torelm">
+    <link rel="stylesheet" href="css/main.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="mobile-web-app-capable" content="yes">
+     
+</head>
+
+<body id="designx-body">
+ 
+    
+
+
+
+<div id="dx-main-grid">
+    <nav id="js-main-nav">
+        
+        <button id="goFS">Go fullscreen</button><br><br>
+        
+        <span class="js-button-font-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-font-fill" viewBox="0 0 16 16">
+                <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5.057 4h5.886L11 6h-.5c-.18-1.096-.356-1.192-1.694-1.235l-.298-.01v6.09c0 .47.1.582.903.655v.5H6.59v-.5c.799-.073.898-.184.898-.654V4.755l-.293.01C5.856 4.808 5.68 4.905 5.5 6H5l.057-2z"/>
+              </svg> Font scale
+        </span><br>
+        <span class="js-button-contraster">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+              </svg> Contrast checker
+        </span><br>
+        <span class="js-button-palette">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-palette2" viewBox="0 0 16 16">
+                <path d="M0 .5A.5.5 0 0 1 .5 0h5a.5.5 0 0 1 .5.5v5.277l4.147-4.131a.5.5 0 0 1 .707 0l3.535 3.536a.5.5 0 0 1 0 .708L10.261 10H15.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5H3a2.99 2.99 0 0 1-2.121-.879A2.99 2.99 0 0 1 0 13.044m6-.21 7.328-7.3-2.829-2.828L6 7.188v5.647zM4.5 13a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zM15 15v-4H9.258l-4.015 4H15zM0 .5v12.495V.5z"/>
+                <path d="M0 12.995V13a3.07 3.07 0 0 0 0-.005z"/>
+              </svg> Color Maker
+        </span>
+    </nav>
+    <button disabled hidden class="test-btn">Hej</button>
+    <button disabled hidden class="js-save">Spara</button>
+    <main>
+       
+        <color-palette class="dx-hidden js-amination-fade"></color-palette>
+        <color-palette-grey class="dx-hidden"></color-palette-grey>
+        <color-contraster class="dx-hidden js-amination-fade"></color-contraster>
+        <type-scale class="dx-hidden js-amination-fade"></type-scale>
+        <div class="js-test-output"></div>
+    </main>
+
+ </div>
+
+<script>
+// Init styling and grouping of systems debug output
+// TODO, maybe make this as an integrated output area in the page
+window.addEventListener('load', (event) => {
+    console.group('%cDesign X console debugging', 'color: hotpink');
+
+    
+});
+</script>
+
+<script type="module">
+    //ToDo, put more code for this into the module
+    import {isInFullscreen} from './helpers/isInFullScreen.mjs';  
+    /* Go full screen */
+    let goFS = document.getElementById('goFS');
+    goFS.addEventListener('click', function () { 
+        let isFullScreen = isInFullscreen();
+        console.info('Is in fullscreen is:', isFullScreen);
+        
+        
+        if (isFullScreen) {
+            goFS.innerText = 'Close Fullscreen';
+            if (document.fullscreenElement) {
+                document.exitFullscreen()
+                .then(() => console.info("Document Exited from Full screen mode"))
+                .catch((error) => console.error(error))
+            } 
+        }
+        else {
+            goFS.innerText = 'Go Fullscreen';
+            document.body.requestFullscreen();  
+        }
+
+    
+    });
+  </script>
+
+
+<script type="module">
+    import {fade} from './fx/animations.mjs';  
+    fade('body', 1200);
+
+</script>
+
+<script>
+
+
+
+
+/* Data saving object */ 
+window.colorsObj = {
+    primary: {
+        color: {},
+        colorList: {
+    
+        },
+        metadata: 'test',
+      
+    },
+    secondary: 'secondaryColor',
+    greys: 'greysColor',
+};
+
+
+
+// Mayby this functions is redundant, keeping for now. The funcktions might sort the saving to window.colorObject by themself
+
+/*
+function hslaColorStorage(h, s, l, a = 1) {
+    let hue = h;
+    let saturation = s;
+    let lightness = l;
+    let alpha = a;
+
+    let hslaColorObject = {
+        hue: hue,
+        saturation: saturation,
+        lightness: lightness,
+        alpha: alpha,
+
+    };
+    console.log('HSLA',hslaColorObject);
+    return hslaColorObject;
+};
+
+function getHslaString(colorTst) {
+    let stringHsl = `hsla(${colorTst.hue}, ${colorTst.saturation}%, ${colorTst.lightness}%, ${colorTst.alpha})`;
+    console.log('stringHsl',stringHsl);
+}
+
+let colorTst = hslaColorStorage(20,300,50);
+getHslaString(colorTst);
+
+*/
+
+
+    
+/* Listen to things */
+let listen = document.querySelector('#js-main-nav');
+listen.addEventListener('click', (event) => {
+    
+    let listOfFunctions =  document.querySelectorAll('main > *');
+    listOfFunctions.forEach(function(item) {
+        item.classList.add('dx-hidden');
+    });
+    /* Show the clicked item/function */
+    let target = event.target.className;
+
+    switch (target) {
+        case 'js-button-font-scale':
+        document.querySelector('type-scale').classList.remove('dx-hidden');
+            break;
+        case 'js-button-contraster':
+        document.querySelector('color-contraster').classList.remove('dx-hidden');
+            break;
+        
+        case 'js-button-palette':
+        document.querySelector('color-palette').classList.remove('dx-hidden');
+            break;
+            
+        
+        default:
+            console.log(`Sorry, this is not a valid button/request`);
+    };
+
+
+});
+
+          
+</script>
+ <script src="functions/color-palette.mjs" type="module"></script>
+ <script src="functions/color-palette-grey.mjs" type="module"></script>
+ <script src="functions/contraster.mjs" type="module"></script>
+ <script src="functions/type-scale.mjs" type="module"></script>
+ <script src="functions/save.js"></script>
+ <script src="functions/sound.js"></script>
+
+
+
+</body>
+
+
+</html>
