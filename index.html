@@ -12,7 +12,8 @@
      <meta name="mobile-web-app-capable" content="yes">
      
 </head>
-
+<!-- TODO make font scale for mobile, like base 13px but same ratio-->
+<!-- TODO set size for h1-h6, diffrent ratio then the "brödtext" -->
 <body id="designx-body">
  
     
@@ -27,7 +28,7 @@
         <span class="js-button-font-scale">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-font-fill" viewBox="0 0 16 16">
                 <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5.057 4h5.886L11 6h-.5c-.18-1.096-.356-1.192-1.694-1.235l-.298-.01v6.09c0 .47.1.582.903.655v.5H6.59v-.5c.799-.073.898-.184.898-.654V4.755l-.293.01C5.856 4.808 5.68 4.905 5.5 6H5l.057-2z"/>
-              </svg> Font scale
+              </svg> Type scale
         </span><br>
         <span class="js-button-contraster">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
@@ -44,6 +45,7 @@
     <button disabled hidden class="test-btn">Hej</button>
     <button disabled hidden class="js-save">Spara</button>
     <main>
+       
        
         <color-palette class="dx-hidden js-amination-fade"></color-palette>
         <color-palette-grey class="dx-hidden"></color-palette-grey>
@@ -63,6 +65,9 @@ window.addEventListener('load', (event) => {
     
 });
 </script>
+
+
+
 
 <script type="module">
     //ToDo, put more code for this into the module
@@ -118,38 +123,6 @@ window.colorsObj = {
 };
 
 
-
-// Mayby this functions is redundant, keeping for now. The funcktions might sort the saving to window.colorObject by themself
-
-/*
-function hslaColorStorage(h, s, l, a = 1) {
-    let hue = h;
-    let saturation = s;
-    let lightness = l;
-    let alpha = a;
-
-    let hslaColorObject = {
-        hue: hue,
-        saturation: saturation,
-        lightness: lightness,
-        alpha: alpha,
-
-    };
-    console.log('HSLA',hslaColorObject);
-    return hslaColorObject;
-};
-
-function getHslaString(colorTst) {
-    let stringHsl = `hsla(${colorTst.hue}, ${colorTst.saturation}%, ${colorTst.lightness}%, ${colorTst.alpha})`;
-    console.log('stringHsl',stringHsl);
-}
-
-let colorTst = hslaColorStorage(20,300,50);
-getHslaString(colorTst);
-
-*/
-
-
     
 /* Listen to things */
 let listen = document.querySelector('#js-main-nav');
@@ -172,6 +145,9 @@ listen.addEventListener('click', (event) => {
         
         case 'js-button-palette':
         document.querySelector('color-palette').classList.remove('dx-hidden');
+        
+        /* TODO test function, refactor*/
+        let el = document.querySelector('.dx-color-1');           
             break;
             
         
@@ -189,7 +165,7 @@ listen.addEventListener('click', (event) => {
  <script src="functions/contraster.mjs" type="module"></script>
  <script src="functions/type-scale.mjs" type="module"></script>
  <script src="functions/save.js"></script>
- <script src="functions/sound.js"></script>
+
 
 
 

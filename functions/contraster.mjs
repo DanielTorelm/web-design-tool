@@ -122,7 +122,7 @@ class Contraster extends HTMLElement {
 
             const visual = `
                 <h2>Example text below</h2>
-                <div class="dx-border-radius example-text" style="color: ${color1}; background-color: ${color2};">This is an text with the color of the firts color and background is from the second choosen color.</div>
+                <div class="dx-border-radius example-text" style="color: ${color1}; background-color: ${color2};">This is an text with the color of the first color and the background is from the second choosen color.</div>
             `;
             //document.querySelector('main').innerHTML = result;
             shadow.querySelector('#contraster-visual-wrapper').innerHTML = visual;
